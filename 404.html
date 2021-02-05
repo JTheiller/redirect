@@ -51,8 +51,7 @@
             var isInvalidUrl =
               message === "Not Found" ||
               !title ||
-              !isUrl(title) ||
-              url.hostname === location.hostname;
+              !isUrl(title);
 
             if (isInvalidUrl) {
               location.replace(homepage);
