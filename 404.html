@@ -10,6 +10,14 @@
       // Format: https://api.github.com/repos/{owner}/{repo}/issues/
       var GITHUB_ISSUES_LINK =
         "https://api.github.com/repos/JTheiller/redirect/issues/";
+		
+		
+	  var GITHUB_ISSUES_LINK_PREFIX =
+	    "https://api.github.com/search/issues?q=";
+		
+	  var GITHUB_ISSUES_LINK_SUFIX =
+	    "%20in:title+repo:jtheiller/redirect";
+		
       var PATH_SEGMENTS_TO_SKIP = 1;
 
       /**
@@ -24,7 +32,7 @@
 
       function redirect() {
         var location = window.location;
-        var issueNumber = location.pathname.split("/")[
+		var issueTitle = location.pathname.split("/")[
           PATH_SEGMENTS_TO_SKIP + 1
         ];
         var homepage =
@@ -40,23 +48,23 @@
         xhr.onload = function () {
           try {
             var payload = JSON.parse(xhr.response);
-            var message = payload.message;
-            var title = payload.title;
+            var message = payload.items[0].message;
+			var body = payload.items[0].body;
 
             // Workaround IE 11 lack of support for new URL()
             var url = document.createElement("a");
-            url.setAttribute("href", title);
+            url.setAttribute("href", body);
 
-            // Invalid URLs includes invalid issue numbers, issue titles that are not URLs, and recursive destination URLs
+            // Invalid URLs includes invalid issue numbers, issue body that are not URLs, and recursive destination URLs
             var isInvalidUrl =
               message === "Not Found" ||
-              !title ||
-              !isUrl(title);
+              !body ||
+              !isUrl(body);
 
             if (isInvalidUrl) {
               location.replace(homepage);
             } else {
-              location.replace(title);
+              location.replace(body);
             }
           } catch (e) {
             location.replace(homepage);
@@ -66,7 +74,7 @@
         xhr.onerror = function () {
           location.replace(homepage);
         };
-        xhr.open("GET", GITHUB_ISSUES_LINK + issueNumber);
+		xhr.open("GET", GITHUB_ISSUES_LINK_PREFIX + issueTitle + GITHUB_ISSUES_LINK_SUFIX);
         xhr.send();
       }
 
