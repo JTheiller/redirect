@@ -10,21 +10,11 @@ entirely on GitHub for free!
 
 [Yay! We got to the top of HN!](https://news.ycombinator.com/item?id=25110879)
 
-<img src="https://i.imgur.com/ZfD7XGt.png" alt="Top of HN" width="240px">
-
-And on GitHub trending!
-
-<img src="https://i.imgur.com/OkYCSOx.png" alt="GitHub Trending" width="240px">
 
 ## 👨‍🏫 Demo
 
-1. [nlsn.cf/1](https://nlsn.cf/1) should link to this repo.
+[yourdomainpage.com/issuetitle] or [yourusergitpage.github.io/issuetitle] exemple: [jtheiller.github.io/redirect/issuetitle]
 
-1. To add a new short link, add an issue with the title being the link you want
-   to shorten (including the `http(s)://`) to
-   [https://github.com/nelsontky/gh-pages-url-shortener-db/issues](https://github.com/nelsontky/gh-pages-url-shortener-db/issues).
-
-1. The newly created short url can be accessed via `nlsn.cf/{issue_number}`
 
 ## ☕️ Features
 
@@ -33,17 +23,13 @@ And on GitHub trending!
    pages.
 
 1. There is no need for the pound symbol - short URLs look clean like this:
-   `nlsn.cf/1` instead of looking like this: `nlsn.cf/#1`.
+   `jtheiller.github.io/redirect/issuetitle` instead of looking like this: `jtheiller.github.io/redirect/#issuetitle`.
 
 ## 💡 How does this work?
 
-_Thanks to @kidGodzilla for the pretty neat explanation
-[here](https://github.com/nelsontky/gh-pages-url-shortener/issues/5#issuecomment-728040879)._
-
 > 1. 404.html handles all requests
 > 1. Small javascript snippet fetches a JSON representation of the GitHub issue
->    via the JSON API, and redirects to the issue title, as a URL.
-> 1. Profit?
+>    via the JSON API for title name of your repository, and redirects to the issue body, as a URL.
 
 ## 😎 This is so cool! How can I use this with my own domain?!
 
@@ -67,11 +53,10 @@ be reliable. Do proceed at your own risk!_
       1. This is as GitHub domains have an additional path segment (the repo
          name) after the host name.
 1. Create a new repo as a database. (Or you could use your forked repo)
-   1. Update `var GITHUB_ISSUES_LINK = "<your-github-issues-link>";` at the top
+   1. Update `var GITHUB_ISSUES_API_REPO = "<your-github-issues-link>";` at the top
       of `404.html` accordingly afterwards.
-      1. Format for `GITHUB_ISSUES_LINK`:
-         `https://api.github.com/repos/{owner}/{repo}/issues/`
-      1. Remember the trailing `/`!
+      1. Format for `GITHUB_ISSUES_API_REPO`:
+         `https://api.github.com/search/issues?q={title} in:title+repo:{repo}`
 1. Push your changes to your forked repo, and your low cost and cool as heck URL
    shortener will be ready for use!
 
