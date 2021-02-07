@@ -68,7 +68,6 @@
 	xhr.open("GET", GITHUB_ISSUES_API_BASE
 		      + issueTitle 
 		      + GITHUB_ISSUES_API_FILTER + GITHUB_ISSUES_API_USER + "/" + GITHUB_ISSUES_API_REPO
-		      //Only @me
 		      + "+author:" + GITHUB_ISSUES_API_USER);
         xhr.send();
       }
